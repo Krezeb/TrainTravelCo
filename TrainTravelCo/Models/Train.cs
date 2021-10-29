@@ -10,7 +10,7 @@ namespace TrainTravelCo.Models
 {
     public class Train
     {
-        public int Id { get; private set; }
+        public int TrainId { get; private set; }
         public string TrainRegNum { get; set; }
         public int TrainMaxSeats { get; set; }
         
@@ -18,7 +18,7 @@ namespace TrainTravelCo.Models
 
         public Train()
         {
-            Id = _idCounter++;
+            TrainId = _idCounter++;
         }
     }
 }

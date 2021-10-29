@@ -23,31 +23,48 @@ namespace TrainTravelCo.Data
             }
         }
 
-        private List<Train> TrainList = new List<Train>();
-
-        public string AddTrain(Train newTrain)
+        private DataStore()
         {
-            TrainList.Add(newTrain);
-            return $"New Train Added to \"Trains\" List.";
+            _trainList.Add(new Train { TrainMaxSeats = 25, TrainRegNum = "Train-01" });
+            _trainList.Add(new Train { TrainMaxSeats = 50, TrainRegNum = "Train-02" });
+            _tripsList.Add(new Trip { Origin = "Aberdeen", Destination = "Glasgow", DepartureTime = "06:00", TripTrainId = 0 });
+            _tripsList.Add(new Trip { Origin = "Örebro", Destination = "Stockholm", DepartureTime = "10:00", TripTrainId = 1 });
+            _tripsList.Add(new Trip { Origin = "Paris", Destination = "Munich", DepartureTime = "13:00", TripTrainId = 0 });
+            //new Booking { Customer = { Name = "Lac", Tel = "123456789" }, Trip = { Origin = "Paris", Destination = "Munich", DepartureTime = "13:00" } };
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        private List<Train> _trainList = new List<Train>();
+
+        public void AddTrain(Train newTrain)
+        {
+            _trainList.Add(newTrain);
         }
 
         public List<Train> ListAllTrains()
         {
-            return TrainList;
+            return _trainList;
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        private List<Trip> _tripsList = new List<Trip>();
+
+        public void AddTrip(Trip newTrip)
+        {
+            _tripsList.Add(newTrip);
+        }
+
+        public List<Trip> ListAllTrips()
+        {
+            return _tripsList;
         }
     }
 }
 
 
 /*
- * 1.4
- * Vi vill nu lägga till möjligeten att lista och skapa tåg via webben. 
- * Så skapa en controller som heter TrainController. 
- * Klassen ska hantera sökvägen /train. 
- * Skapa metoder med routings för skapa och lista tåg. 
- * Tänkt själv ut vilka attribut, parametrar och return-värden som ska användas.
  * 
- * Eftersom vi inte har något koppling mellan controller och data-lager än kan vi inte implementera metoderna ännu. 
- * Se deluppgift 1.6 för detta.
  * 
  */
