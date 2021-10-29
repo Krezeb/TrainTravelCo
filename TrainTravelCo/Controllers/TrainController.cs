@@ -14,38 +14,37 @@ namespace TrainTravelCo.Controllers
     [ApiController]
     public class TrainController : ControllerBase
     {
-
-        private TrainManager _trainManager;
+        private TrainManager _trainManagerInstance;
 
         public TrainController()
         {
-            _trainManager = new TrainManager();
+            _trainManagerInstance = new TrainManager();
         }
 
-
-
-        //[HttpGet("{trainId}")]
-        //public List<Train> Get(int trainId)
-        //{
-
-        //}
-
-        [HttpGet("train")]
-        public Train GetTrain()
+        [HttpPost ("create")]
+        public string Create([FromBody]Train newTrain)
         {
-            return _trainManager.GetTrain();
+            return _trainManagerInstance.AddTrain(newTrain);
         }
 
-        [HttpPost]
-        public string BookTrain([FromBody] Train train)
+        [HttpGet("getlist")]
+        public List<Train> GetTrainList()
         {
-            bool success = _trainManager.MakeBooking(train);
-
-            if (success)
-            {
-                return $"Booking Successful!";
-            }
-            return $"Booking Unsuccessful...";
+            return _trainManagerInstance.ListAllTrains();
         }
     }
 }
+
+/*
+ * 1.7
+ * Koppla nu samman TrainController med TrainManager. 
+ * Gör detta genom att skapa ett private fält av typen TrainManager i TrainController. 
+ * Skapa sedan en konstruktor i TrainController som skapar en ny instans av TrainManager.
+ * Med detta fält på plats kan vi nu få TrainController att skicka vidare anropen till 
+ * create och list i TrainManager som i sin tur skickar vidare till DataStore.
+ * 
+ * Prova att köra programmet. 
+ * Skapa ett tåg och lista sedan alla tåg. 
+ * Har du gjort rätt kommer ditt tåg visas i listan.
+ * 
+ */ 

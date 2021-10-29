@@ -9,20 +9,29 @@ namespace TrainTravelCo.Managers
 {
     public class TrainManager
     {
-        public bool MakeBooking(Train train)
+        public string AddTrain(Train newTrain)
         {
-            if (Train.CurrentBookings + train.SeatsWanted <= train.MaxCapacity)
-            {
-                return true;
-            }
-            return false;
+            DataStore.Instance.AddTrain(newTrain);
+            return $"New Train Added to \"Trains\" List.";
         }
 
-        public Train GetTrain()
+        public List<Train> ListAllTrains()
         {
-            return _trains.GetTrains();
-
+            return DataStore.Instance.ListAllTrains();
         }
-
     }
 }
+
+/*
+ * 1.7
+ * Koppla nu samman TrainController med TrainManager. 
+ * Gör detta genom att skapa ett private fält av typen TrainManager i TrainController. 
+ * Skapa sedan en konstruktor i TrainController som skapar en ny instans av TrainManager.
+ * Med detta fält på plats kan vi nu få TrainController att skicka vidare anropen till 
+ * create och list i TrainManager som i sin tur skickar vidare till DataStore.
+ * 
+ * Prova att köra programmet. 
+ * Skapa ett tåg och lista sedan alla tåg. 
+ * Har du gjort rätt kommer ditt tåg visas i listan.
+ * 
+ */ 

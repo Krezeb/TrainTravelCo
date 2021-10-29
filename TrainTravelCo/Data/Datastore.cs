@@ -7,45 +7,47 @@ using TrainTravelCo.Data;
 
 namespace TrainTravelCo.Data
 {
-    public class Datastore
+    public class DataStore
     {
-        private static Datastore _instance = null;
-        private List<Train> _trains = new List<Train>();
-        private Train _train;
+        private static DataStore _instance = null;
 
-        public Datastore Instance
+        public static DataStore Instance //SINGELTON - this Class is kept in memory and is the only version of this class that will be called.
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new Datastore();
+                    return _instance = new DataStore();
                 }
                 return _instance;
             }
         }
 
-        public Datastore()
+        private List<Train> TrainList = new List<Train>();
+
+        public string AddTrain(Train newTrain)
         {
-            _train = new Train() 
-            {
-                MaxCapacity = 50
-            };
+            TrainList.Add(newTrain);
+            return $"New Train Added to \"Trains\" List.";
         }
 
-        public List<Train> List()
+        public List<Train> ListAllTrains()
         {
-            return _trains;
-        }
-
-        public bool Create(Train train)
-        {
-            _trains.Add(train);
-            return true;
-        }
-        public List<Train> GetTrains()
-        {
-            return _trains;
+            return TrainList;
         }
     }
 }
+
+
+/*
+ * 1.4
+ * Vi vill nu lägga till möjligeten att lista och skapa tåg via webben. 
+ * Så skapa en controller som heter TrainController. 
+ * Klassen ska hantera sökvägen /train. 
+ * Skapa metoder med routings för skapa och lista tåg. 
+ * Tänkt själv ut vilka attribut, parametrar och return-värden som ska användas.
+ * 
+ * Eftersom vi inte har något koppling mellan controller och data-lager än kan vi inte implementera metoderna ännu. 
+ * Se deluppgift 1.6 för detta.
+ * 
+ */

@@ -10,15 +10,11 @@ namespace TrainTravelCo.Models
 {
     public class Train
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int SeatsWanted { get; set; }
-
-        public int MaxCapacity { get; set; }
-        public static int CurrentBookings { get; set; }
-
-
-        private static int _idCounter = 0;
+        public int Id { get; private set; }
+        public string TrainRegNum { get; set; }
+        public int TrainMaxSeats { get; set; }
+        
+        private static int _idCounter = 0; //Is kept in memory and used every time the Train Class is called ("Static")
 
         public Train()
         {
