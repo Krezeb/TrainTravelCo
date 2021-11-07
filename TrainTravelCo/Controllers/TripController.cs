@@ -34,9 +34,31 @@ namespace TrainTravelCo.Controllers
         }
 
         [HttpGet("getlist")]
-        public List<Trip> GetTripList()
+        public List<ResponseDTO> GetTripList()
         {
-            return _tripManagerInstance.ListAllTrips();
+            List<Trip> trips = _tripManagerInstance.ListAllTrips();
+            List<ResponseDTO> output = new List<ResponseDTO>();
+
+            foreach (Trip aTrip in trips)
+            {
+                List<Customer> customers = new List<Customer>();
+                foreach (Booking booking in aTrip.Bookings)
+                {
+                    customers.Add(booking.Customer);
+                }
+
+                ResponseDTO tempResponseDTO = new ResponseDTO()
+                {
+                    TripId = aTrip.TripId,
+                    DepartureTime = aTrip.DepartureTime,
+                    Origin = aTrip.Origin,
+                    Destination = aTrip.Destination,
+                    TrainId = aTrip.Train.TrainId,
+                    Customers = customers
+                };
+                output.Add(tempResponseDTO);
+            }
+            return output;
         }
     }
 }

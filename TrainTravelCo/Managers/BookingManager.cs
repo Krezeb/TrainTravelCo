@@ -17,7 +17,10 @@ namespace TrainTravelCo.Managers
 
             foreach (Trip trip in tripList)
             {
-                if (origin == trip.Origin)
+                int maxCapacity = trip.Train.TrainMaxSeats;
+                int bookedSeats = trip.Bookings.Count;
+
+                if (origin == trip.Origin && bookedSeats < maxCapacity)
                 {
                     searchResultList.Add(trip);
                 }
@@ -25,21 +28,47 @@ namespace TrainTravelCo.Managers
             return searchResultList;
         }
 
-        public void BookTrip(int tripID, Customer customer)
+        public void BookTrip(int tripID, string name, string tel)
         {
-            var tripList = DataStore.Instance.ListAllTrips();
-
-            foreach (Trip trip in tripList)
+            Customer newCustomer = new Customer()
             {
-                if (tripID == trip.TripId)
+                Name = name,
+                Tel = tel
+            };
+
+            Trip newTrip = GetTrip(tripID);
+
+            int maxCapacity = newTrip.Train.TrainMaxSeats;
+            int bookedSeats = newTrip.Bookings.Count;
+
+            if (bookedSeats == maxCapacity)
+            {
+                throw new Exception("Train Fully Booked...");
+            }
+
+            Booking newBooking = new Booking()
+            {
+                Customer = newCustomer,
+                Trip = newTrip
+            };
+
+            newTrip.Bookings.Add(newBooking);
+        }
+
+        public Trip GetTrip(int tripId)
+        {
+            List<Trip> tripList = DataStore.Instance.ListAllTrips();
+            Trip newTrip = new Trip();
+            newTrip = null;
+            foreach (Trip aTrip in tripList)
+            {
+                if (tripId == aTrip.TripId)
                 {
-                    var booking = new Booking 
-                    { 
-                        Customer = customer, 
-                        Trip = trip 
-                    };
+                    newTrip = aTrip;
+                    return newTrip;
                 }
             }
+                throw new Exception($"Trip ID \"{tripId}\" not found...");
         }
     }
 }

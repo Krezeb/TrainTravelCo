@@ -6,7 +6,7 @@ using TrainTravelCo.Models;
 using TrainTravelCo.Managers;
 using TrainTravelCo.Controllers;
 using TrainTravelCo.Data;
-
+using TrainTravelCo_v2.DTO;
 
 namespace TrainTravelCo.Controllers
 {
@@ -28,9 +28,13 @@ namespace TrainTravelCo.Controllers
         }
 
         [HttpPost("booktrip")]
-        public void BookTrip(int tripId, [FromBody]Customer customer)
+        public void BookTrip(BookTripDTO bookTripDto)
         {
-            _bookingManagerInstance.BookTrip(tripId, customer);
+            int tripId = bookTripDto.TripId;
+            string customerName = bookTripDto.CustomerName;
+            string customerPhone = bookTripDto.CustomerPhone;
+
+            _bookingManagerInstance.BookTrip(tripId, customerName, customerPhone);
         }
     }
 }
