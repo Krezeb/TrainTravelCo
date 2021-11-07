@@ -9,26 +9,38 @@ namespace TrainTravelCo.Managers
 {
     public class TripManager
     {
-        public string AddTrip(int trainId, string origin, string destination, string departureTime  )
+        public Trip CreateTrip(int trainId, string origin, string destination, string departureTime)
         {
-            var trainList = DataStore.Instance.ListAllTrains();
-            
-            foreach(Train train in trainList)
+            Train train = GetTrain(trainId);
+            var newTrip = new Trip()
             {
-                if (trainId == train.TrainId)
+                Origin = origin,
+                Destination = destination,
+                DepartureTime = departureTime,
+                Train = train
+            };
+            DataStore.Instance.SaveTrip(newTrip);
+            return newTrip;
+        }
+
+        private Train GetTrain(int trainId)
+        {
+            Train train = null;
+            var trainList = DataStore.Instance.ListAllTrains();
+
+            foreach (Train atrain in trainList)
+            {
+                if (trainId == atrain.TrainId)
                 {
-                    var newTrip = new Trip()
-                    {
-                        TripTrainId = trainId,
-                        Origin = origin,
-                        Destination = destination,
-                        DepartureTime = departureTime
-                    };
-                    DataStore.Instance.AddTrip(newTrip);
-                    return $"New Trip Added to \"Trip\" List.";
+                    train = atrain;
+                    break;
                 }
             }
-            return $"No such Train found...";
+            if (train == null)
+            {
+                throw new Exception($"No such Train with TrainID {trainId} found...");
+            }
+            return train;
         }
 
         public List<Trip> ListAllTrips()

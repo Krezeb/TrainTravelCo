@@ -10,7 +10,7 @@ namespace TrainTravelCo.Models
 {
     public class Customer
     {
-        public string Name;
-        public string Tel;
-    }
+        public string Name { get; init; }
+        public string Tel { get; init; }
+}
 }

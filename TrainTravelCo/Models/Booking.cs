@@ -10,7 +10,7 @@ namespace TrainTravelCo.Models
 {
     public class Booking
     {
-        public Customer Customer { get; set; }
-        public Trip Trip { get; set; }
+        public Customer Customer { get; init; }
+        public Trip Trip { get; init; }
     }
 }

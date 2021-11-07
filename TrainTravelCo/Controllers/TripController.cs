@@ -6,7 +6,7 @@ using TrainTravelCo.Models;
 using TrainTravelCo.Managers;
 using TrainTravelCo.Controllers;
 using TrainTravelCo.Data;
-
+using TrainTravelCo_v2.DTO;
 
 namespace TrainTravelCo.Controllers
 {
@@ -22,9 +22,15 @@ namespace TrainTravelCo.Controllers
         }
 
         [HttpPost ("create")]
-        public string Create(int trainId, string origin, string destination, string departureTime)
+        public Trip CreateTrip(TripDTO tripDto)
         {
-            return _tripManagerInstance.AddTrip(trainId, origin, destination, departureTime);
+            string origin = tripDto.Origin;
+            string destination = tripDto.Destination;
+            int trainId = tripDto.TrainId;
+            string departureTime = tripDto.DepartureTime;
+
+            Trip newTrip = _tripManagerInstance.CreateTrip(trainId, origin, destination, departureTime);
+            return newTrip;
         }
 
         [HttpGet("getlist")]

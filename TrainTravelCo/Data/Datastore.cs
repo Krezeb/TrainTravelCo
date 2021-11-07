@@ -23,21 +23,25 @@ namespace TrainTravelCo.Data
             }
         }
 
+        private List<Train> _trainList;
+        private List<Trip> _tripsList;
+
         private DataStore()
         {
+            _trainList = new List<Train>();
+            _tripsList = new List<Trip>();
+
             _trainList.Add(new Train { TrainMaxSeats = 25, TrainRegNum = "Train-01" });
             _trainList.Add(new Train { TrainMaxSeats = 50, TrainRegNum = "Train-02" });
-            _tripsList.Add(new Trip { Origin = "Aberdeen", Destination = "Glasgow", DepartureTime = "06:00", TripTrainId = 0 });
-            _tripsList.Add(new Trip { Origin = "Örebro", Destination = "Stockholm", DepartureTime = "10:00", TripTrainId = 1 });
-            _tripsList.Add(new Trip { Origin = "Paris", Destination = "Munich", DepartureTime = "13:00", TripTrainId = 0 });
+            _tripsList.Add(new Trip { Origin = "Aberdeen", Destination = "Glasgow", DepartureTime = "06:00", Train = _trainList[0]});
+            _tripsList.Add(new Trip { Origin = "Örebro", Destination = "Stockholm", DepartureTime = "10:00", Train = _trainList[1]});
+            _tripsList.Add(new Trip { Origin = "Paris", Destination = "Munich", DepartureTime = "13:00", Train = _trainList[1]});
             //new Booking { Customer = { Name = "Lac", Tel = "123456789" }, Trip = { Origin = "Paris", Destination = "Munich", DepartureTime = "13:00" } };
         }
 
         //---------------------------------------------------------------------------------------------
 
-        private List<Train> _trainList = new List<Train>();
-
-        public void AddTrain(Train newTrain)
+        public void SaveTrain(Train newTrain)
         {
             _trainList.Add(newTrain);
         }
@@ -49,9 +53,7 @@ namespace TrainTravelCo.Data
 
         //---------------------------------------------------------------------------------------------
 
-        private List<Trip> _tripsList = new List<Trip>();
-
-        public void AddTrip(Trip newTrip)
+        public void SaveTrip(Trip newTrip)
         {
             _tripsList.Add(newTrip);
         }

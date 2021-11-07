@@ -11,7 +11,7 @@ namespace TrainTravelCo.Managers
     {
         public string AddTrain(Train newTrain)
         {
-            DataStore.Instance.AddTrain(newTrain);
+            DataStore.Instance.SaveTrain(newTrain);
             return $"New Train Added to \"Trains\" List.";
         }
 
